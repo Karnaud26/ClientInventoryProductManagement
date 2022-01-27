@@ -8,7 +8,7 @@ import { ProductMockService } from './product/product.mock.service';
 import { NavbarComponent } from './menu/navbar/navbar.component';
 import { SidebarComponent } from './menu/sidebar/sidebar.component';
 import { ContentComponent } from './content/content.component';
-import { DashboardComponent } from './dashboard/dashboard.component';2
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
