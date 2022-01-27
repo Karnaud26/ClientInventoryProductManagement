@@ -1,9 +1,62 @@
-<p>product works!</p>
-<ul>
-  <li *ngFor="let product of Products">
-    <p> Ref: {{product.ref }}</p>
-    <p> Name: {{product.name }}</p>
-    <p> Quantity: {{product.qty }}</p>
-    <p> Unit price: {{product.unitprice }}</p>
-  </li>
-</ul>
+<h3>Products</h3>
+<div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead  class="table-info">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of Products">
+                <th scope="row">{{product.ref}}</th>
+                <td>{{product.name}}</td>
+                <td>{{product.qty}}</td>
+                <td>{{product.unitprice}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-header">
+            <h4>Add product</h4>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="productForm">
+              <div class="form-group">
+                <label for="validationServer01">Code</label>
+                <input type="text" class="form-control" id="validationServer01" placeholder="Code product"  formControlName="ref" required>
+                <div class="alert" *ngIf="productForm.controls['ref'].invalid &&
+                            (productForm.controls['ref'].dirty || productForm.controls['ref'].touched)">
+                  Reference is required
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="validationServer02">Description</label>
+                <input type="text" class="form-control" id="validationServer02" placeholder="Product name" formControlName="name">
+              </div>
+              <div class="form-group">
+                <label for="validationServer03">Quantity</label>
+                <input type="text" class="form-control" id="validationServer03" placeholder="Quantity" formControlName="qty">
+              </div>
+              <div class="form-group">
+                <label for="validationServer04">Unit Price</label>
+                <input type="text" class="form-control" id="validationServer04" placeholder="Unit price" formControlName="unitprice">
+              </div>
+              <button class="btn btn-primary" [disabled]="productForm.invalid"><i class="far fa-save"></i></button>
+            </form>
+          </div>
+          <div class="card-footer">
+            footer
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
