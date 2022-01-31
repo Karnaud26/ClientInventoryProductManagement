@@ -1,8 +1,8 @@
 export class Product{
-  constructor(public ref?: number,
+  constructor(public ref?: string,
               public name?: string,
               public qty?: number,
-              public unitprice?: number){
+              public unitPrice?: number){
 
   }
 }
