@@ -61,14 +61,14 @@ export class ProductComponent implements OnDestroy, OnInit, AfterViewInit {
     const p = this.productForm.value;
     //console.log(p);
     this.productService.addProductService(p).subscribe(
-      resp => {
+      res => {
         this.loadProductsComponent();
       }
     );
   }
 
   cancelProductComponent(){
-    
+
   }
 
   ngAfterViewInit(): void {

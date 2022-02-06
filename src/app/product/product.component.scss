@@ -4,6 +4,42 @@
     padding-right: 5px;
   }
 }
+
 .alert{
   color: #d73a49
+}
+
+.green-color {
+  color:green;
+}
+
+.red-color {
+    color:red;
+}
+
+.list-icons{
+  width: 100%;
+  float: left;
+  .dropdown{
+    width: 100%;
+    float: left;
+  }
+}
+
+.list-icons-item + .dropdown-menu{
+  position: relative;
+  display: flex;
+  padding: 0;
+  border: none;
+  float: left;
+  min-width: 4rem;
+  background-color: transparent;
+  .dropdown-item{
+    padding: 0;
+    display: flex;
+    width: 50%;
+    &:hover{
+      background-color: transparent;
+    }
+  }
 }
