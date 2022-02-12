@@ -102,7 +102,7 @@
       </div>
       <!-- End modal Update -->
       <!-- Modal Delete -->
-      <div class="modal fade" id="removeProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="removeProductModal" data-backdrop="static" tabindex="-2">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -112,60 +112,24 @@
               </button>
             </div>
             <div class="modal-body">
-              <form class="form-sm" [formGroup]="productUpdateForm" (ngSubmit)="onSubmit()">
+              <form class="form-sm" [formGroup]="productDeleteForm" (ngSubmit)="onSubmit()">
                 <div class="modal-body">
                   <div class="form-group">
                     <label class="idrowhidden" for="id">(ID):</label>
                     <input type="hidden" class="form-control" id="id" formControlName="id" />
                     <label for="ref">Code:</label>
                     <input type="text" class="form-control" id="ref" formControlName="ref" />
-                    <!--<div class="alert alert-danger" *ngIf="productUpdateForm.get('ref').invalid
-                      && productUpdateForm.get('ref').touched">
-                      <div *ngIf="productUpdateForm.get('ref').errors.required">
-                        Reference Code is required.
-                      </div>
-                      <div *ngIf="productUpdateForm.get('ref').errors.minlength">
-                        First Name must be at least 5 characters long.
-                      </div>
-                    </div>-->
                   </div>
                   <div class="form-group">
                     <label for="name">Description:</label>
                     <input type="text" class="form-control" id="name" formControlName="name" />
-                  <!--  <div class="alert alert-danger" *ngIf="f[name].errors['required']">
-                        Name is required.
-                    </div>-->
                   </div>
-                  <div class="form-group">
-                    <label for="qty">Quantity:</label>
-                    <input type="number" class="form-control" id="qty" formControlName="qty" />
-                  </div>
-                  <div class="form-group">
-                    <label for="unitPrice">Unit Price:</label>
-                    <span type="number" class="form-control" id="unitPrice" placeholder="Unit price" formControlName="unitPrice" onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" onpaste="return false" min="0" />
-                  </div>
-                  <!--<div class="form-group">
-                    <label for="startDate">Start Date</label>
-                    <input type="date" class="form-control" id="startDate"
-                    formControlName="startDate">
-                  </div>
-                  <div class="form-group">
-                    <label for="userType">User Type</label>
-                    <select class="form-control" id="userType"
-                    formControlName="userType">
-                      <option *ngFor="let type of userTypes" [value]="type">{{type}}</option>
-                    </select>
-                  </div>-->
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success btn-save"><i class="fa fa-save"></i>OK</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i>Close</button>
                 </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-success btn-save"><i class="fa fa-save">Save</i></button>
-              <button class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove">Cancel</i></button>
             </div>
           </div>
         </div>

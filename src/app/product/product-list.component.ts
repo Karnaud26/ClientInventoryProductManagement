@@ -24,7 +24,7 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
 
   dtTrigger: Subject<any> = new Subject<any>();
 
-  operation: string = 'add';
+  operation: string = '';
 
   responseMessage: string = '';
 
@@ -61,6 +61,12 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
     unitPrice: new FormControl(0)
   });
 
+  productDeleteForm = new FormGroup({
+    id: new FormControl({value:'', disabled: true}),
+    ref: new FormControl({value:'', disabled: true}),
+    name: new FormControl({value:'', disabled: true}),
+  });
+
 
   initProductComponent(){
     //this.selectedProduct = new Product();
@@ -78,11 +84,12 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   onClickUpdate(id: any){
+    this.operation = 'edit';
     this.productService.getProductServiceById(id).subscribe(
       responseData => {
         this.product = responseData;
         console.log(this.product);
-        this.prepareUpdateForm();
+        this.prepareForm();
       },
       errorMessage => {
         console.log(errorMessage);
@@ -91,21 +98,31 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
     );
   }
 
-  prepareUpdateForm(){
-    this.productUpdateForm.setValue({
-      id: this.product.id,
-      ref: this.product.ref,
-      name: this.product.name,
-      qty: this.product.qty,
-      unitPrice: this.product.unitPrice
-    });
+  prepareForm(){
+    if (this.operation == 'edit'){
+      this.productUpdateForm.setValue({
+        id: this.product.id,
+        ref: this.product.ref,
+        name: this.product.name,
+        qty: this.product.qty,
+        unitPrice: this.product.unitPrice
+      });
+    }else if (this.operation == 'delete'){
+      this.productDeleteForm.setValue({
+        id: this.product.id,
+        ref: this.product.ref,
+        name: this.product.name,
+      });
+    }
   }
 
   onClickDelete(id: any){
-    this.productService.deleteProductService(id).subscribe(
+    this.operation = 'delete';
+    this.productService.getProductServiceById(id).subscribe(
       responseData => {
-        this.responseMessage = 'Successfully deleted';
-        this.notifyService.showSuccess(this.responseMessage,this.msgApplication);
+        this.product = responseData;
+        console.log(this.product);
+        this.prepareForm();
       },
       errorMessage => {
         console.log(errorMessage);
@@ -115,27 +132,42 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   onSubmit(){
-    let product = new Product;
-    console.log(this.productUpdateForm.getRawValue().id);
-    console.log(this.productUpdateForm.getRawValue().ref);
-    product.id = this.productUpdateForm.getRawValue().id;
-    product.ref = this.productUpdateForm.getRawValue().ref;
-    product.name = this.productUpdateForm.value.name;
-    product.qty = this.productUpdateForm.value.qty;
-    product.unitPrice = this.productUpdateForm.value.unitPrice;
-    this.productService.updateProductService(product).subscribe(
-      responseData => {
-        this.responseMessage = 'Successfully update';
-        this.notifyService.showSuccess(this.responseMessage,this.msgApplication);
-        this.closebutton.nativeElement.click();
-        this.loadProductsComponent();
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        this.notifyService.showError(errorMessage.error.error, this.msgApplication);
-      }
-    );
-
+    if (this.operation == 'edit'){
+      let product = new Product;
+      console.log(this.productUpdateForm.getRawValue().id);
+      console.log(this.productUpdateForm.getRawValue().ref);
+      product.id = this.productUpdateForm.getRawValue().id;
+      product.ref = this.productUpdateForm.getRawValue().ref;
+      product.name = this.productUpdateForm.value.name;
+      product.qty = this.productUpdateForm.value.qty;
+      product.unitPrice = this.productUpdateForm.value.unitPrice;
+      this.productService.updateProductService(product).subscribe(
+        responseData => {
+          this.responseMessage = 'Successfully updated';
+          this.notifyService.showSuccess(this.responseMessage,this.msgApplication);
+          this.closebutton.nativeElement.click();
+          this.loadProductsComponent();
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          this.notifyService.showError(errorMessage.error.error, this.msgApplication);
+        }
+      )
+    }else if(this.operation == 'delete'){
+      let id = this.productDeleteForm.getRawValue().id;
+      this.productService.deleteProductService(id).subscribe(
+        responseData => {
+          this.responseMessage = 'Successfully deleted';
+          this.notifyService.showSuccess(this.responseMessage,this.msgApplication);
+          this.closebutton.nativeElement.click();
+          this.loadProductsComponent();
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          this.notifyService.showError(errorMessage.error.error, this.msgApplication);
+        }
+      )
+    }
   }
 
   cancelProductComponent(){
