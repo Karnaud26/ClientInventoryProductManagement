@@ -6,19 +6,24 @@ import { AppComponent } from './app.component';
 import { DataTablesModule } from "angular-datatables";
 
 import { ProductComponent } from './product/product.component';
-//import { ProductMockService } from './product/product.mock.service';
+import { ProductListComponent } from "./product/product-list.component";
 import { ProductService } from "./product/product.service";
 import { NavbarComponent } from './menu/navbar/navbar.component';
 import { SidebarComponent } from './menu/sidebar/sidebar.component';
 import { ContentComponent } from './content/content.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app.routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { NotificationService } from './toastr.service';
 
+//declare const toastr: Toastr;
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
+    ProductListComponent,
     NavbarComponent,
     SidebarComponent,
     ContentComponent,
@@ -29,11 +34,17 @@ import { AppRoutingModule } from './app.routing.module';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    DataTablesModule
+    DataTablesModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
-    //ProductMockService,
-    ProductService
+    ProductService,
+    NotificationService
+    /*{
+      provide: TOASTR_TOKEN,
+      useValue: toastr
+    }*/
   ],
   bootstrap: [AppComponent]
 })

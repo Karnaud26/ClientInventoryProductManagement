@@ -8,23 +8,25 @@ import { Product } from "../shared/product";
 @Injectable()
 
 export class ProductService {
-  constructor(private httpClient: HttpClient) {
-
-  }
+  constructor(private httpClient: HttpClient) {  }
 
   getProductsService(): Observable<any>{
     return this.httpClient.get(API_URLS.PRODUCTS_URL);
   }
 
+  getProductServiceById(id: number): Observable<any>{
+    return this.httpClient.get(API_URLS.GET_PRODUCTS_URL + `/${id}`);
+  }
+
 	addProductService(product: Product): Observable<any>{
-		return this.httpClient.post(API_URLS.ADD_PRODUCTS_URL, product)
+		return this.httpClient.post(API_URLS.ADD_PRODUCTS_URL, product);
 	}
 
 	updateProductService(product: Product): Observable<any>{
-		return this.httpClient.put(API_URLS.UPDATE_PRODUCTS_URL, product)
+		return this.httpClient.put(API_URLS.UPDATE_PRODUCTS_URL, product )
 	}
 
-	deleteProductService(ref: string): Observable<any>{
-		return this.httpClient.delete(API_URLS.DELETE_PRODUCTS_URL + `/${ref}`);
+	deleteProductService(id: number): Observable<any>{
+		return this.httpClient.delete(API_URLS.DELETE_PRODUCTS_URL + `/${id}`);
 	}
 }

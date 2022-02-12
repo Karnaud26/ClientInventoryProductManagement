@@ -1,27 +1,40 @@
-import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Subject } from 'rxjs';
-import {  Product } from "../shared/product";
-import { DataTableDirective } from 'angular-datatables';
-//import {  ProductMockService } from "./product.mock.service";
+import { Product } from "../shared/product";
 import { ProductService  } from "./product.service";
-import 'rxjs/add/operator/map';
+import { NotificationService } from '../toastr.service';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnDestroy, OnInit, AfterViewInit {
-  @ViewChild(DataTableDirective) dtElement?: DataTableDirective;
-  dtOptions: DataTables.Settings = {};
-  productsComponent: Product[] = [];
-  productForm: FormGroup;
-  dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private productService: ProductService, private fb: FormBuilder) {
-    // On creer le formulaire dans le constructeur
+export class ProductComponent implements OnInit {
+
+  productForm!: FormGroup;
+
+  operation: string = 'add';
+
+  selectedProduct: any;
+
+  msgApplication = "Product Application";
+
+  constructor(private productService: ProductService,
+              private fb: FormBuilder,
+              private notifyService: NotificationService) {
+
+    this.createForm();
+
+  }
+
+  ngOnInit(): void {
+    this.initProductComponent();
+  };
+
+  createForm(){
     this.productForm = this.fb.group({
+      id:0,
       ref:['', Validators.required],
       name:['', Validators.required],
       qty: '',
@@ -29,52 +42,35 @@ export class ProductComponent implements OnDestroy, OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      processing: true,
-      retrieve:true,
-      paging: true,
-      order: [[1, "asc"]],
-      autoWidth: true,
-      responsive: true
-      //dom: 'Bfrtip',
-      //  buttons: [
-      //      'copy', 'csv', 'excel', 'print'
-      //  ]
-    };
-    this.loadProductsComponent();
-  };
-
-  loadProductsComponent(){
-    this.productService.getProductsService().subscribe(
-      data => {this.productsComponent = data;
-              this.dtTrigger.next();
-            },
-      error => {console.log('An error was occured.')},
-      () => {console.log('loading product was done')},
-    );
-  }
-
   addProductComponent(){
     const p = this.productForm.value;
-    //console.log(p);
     this.productService.addProductService(p).subscribe(
-      res => {
-        this.loadProductsComponent();
+      responseMessage  => {
+        console.log(responseMessage)
+        this.notifyService.showSuccess("Product add sucessfully", this.msgApplication);
+        this.initProductComponent();
+      },
+      errorMessage => { console.log(errorMessage); this.notifyService.showError(errorMessage.error, this.msgApplication);
       }
     );
   }
 
+  editProductComponent(){
+    this.productService.updateProductService(this.selectedProduct).subscribe(
+      response  => {
+        console.log(response);
+        this.initProductComponent();
+      },
+      error => {
+        console.log(error);
+      });
+  }
+
+  initProductComponent(){
+    this.selectedProduct = new Product();
+  }
+
   cancelProductComponent(){
-
-  }
-
-  ngAfterViewInit(): void {
-    this.dtTrigger.next();
-  }
-  ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();
+    this.initProductComponent();
   }
 }
