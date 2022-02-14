@@ -4,12 +4,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from "./product/product-list.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProductResolver } from "./product/product.resolver";
 
 export const appRoutes: Routes = [
-  {path: 'product', component: ProductComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'productlist', component: ProductListComponent},
-  {path: '', redirectTo: '/dashboard', pathMatch: 'full'}
+  {
+    path: 'product',
+    component: ProductComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
+  {
+    path: 'productlist',
+    component: ProductListComponent,
+    resolve:{
+      productlist: ProductResolver
+    }
+  },
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
@@ -19,7 +36,8 @@ export const appRoutes: Routes = [
       {enableTracing: true}
     )
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ProductResolver]
 })
 
 export class AppRoutingModule {}

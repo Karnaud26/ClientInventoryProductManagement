@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Product } from "../shared/product";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Observable } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 import { DataTableDirective } from 'angular-datatables';
+
+import { Product } from "../shared/product";
 import { ProductService  } from "./product.service";
 import { NotificationService } from '../toastr.service';
 
@@ -16,7 +17,7 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
 
   dtOptions: DataTables.Settings = {};
 
-  productsComponent: Product[] = [];
+  public productsComponent!: Product[];
 
   product!: Product;
 
@@ -31,9 +32,10 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
   msgApplication = "Prodcut Application";
 
   constructor(private productService: ProductService,
-              private notifyService: NotificationService) { }
+              private notifyService: NotificationService,
+              private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void{
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
@@ -50,7 +52,8 @@ export class ProductListComponent implements OnDestroy, OnInit, AfterViewInit {
     };
 
     //this.initProductComponent();
-    this.loadProductsComponent();
+    //this.loadProductsComponent();
+    this.productsComponent = this.route.snapshot.data['productlist'];
   }
 
   productUpdateForm = new FormGroup({

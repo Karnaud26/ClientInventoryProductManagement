@@ -6,7 +6,6 @@ import { API_URLS } from "../config/api.url.config";
 import { Product } from "../shared/product";
 
 @Injectable()
-
 export class ProductService {
   constructor(private httpClient: HttpClient) {  }
 

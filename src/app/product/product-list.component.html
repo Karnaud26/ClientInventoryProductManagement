@@ -114,6 +114,7 @@
             <div class="modal-body">
               <form class="form-sm" [formGroup]="productDeleteForm" (ngSubmit)="onSubmit()">
                 <div class="modal-body">
+                  <p>Voulez-vous supprimer ce produit?</p>
                   <div class="form-group">
                     <label class="idrowhidden" for="id">(ID):</label>
                     <input type="hidden" class="form-control" id="id" formControlName="id" />
@@ -126,7 +127,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success btn-save"><i class="fa fa-save"></i>OK</button>
+                    <button type="submit" class="btn btn-success btn-save"><i class="fa fa-save"></i>Accept</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-remove"></i>Close</button>
                 </div>
               </form>
