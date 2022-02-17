@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { AppService } from '../../app.service';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -13,10 +15,14 @@ export class NavbarComponent implements OnInit {
   @Output()
   showSideBarChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private appService: AppService) { }
 
   ngOnInit(): void {
 
+  }
+
+  signOut(){
+    this.appService.logout();
   }
 
   displaySideBar(){

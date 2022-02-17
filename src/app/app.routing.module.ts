@@ -5,26 +5,41 @@ import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from "./product/product-list.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductResolver } from "./product/product.resolver";
+import { LoginComponent } from "./login/login.component";
+import { HomeComponent } from "./home/home.component";
 
 export const appRoutes: Routes = [
   {
-    path: 'product',
-    component: ProductComponent,
+    path: 'login',
+    component : LoginComponent
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent
-  },
-  {
-    path: 'productlist',
-    component: ProductListComponent,
-    resolve:{
-      productlist: ProductResolver
-    }
+    path: 'home',
+    component : HomeComponent,
+    children: [
+      {
+        path: 'product',
+        component: ProductComponent,
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'productlist',
+        component: ProductListComponent,
+        resolve:{
+          productlist: ProductResolver
+        },
+        outlet: 'contentOutlet'
+      }
+    ]
   },
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/home',
     pathMatch: 'full'
   }
 ];

@@ -1,0 +1,40 @@
+<h1 style="text-align:center">
+Welcome to Inventory Product Management
+</h1>
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login" [formGroup]="authForm" (ngSubmit)="signIn()">
+				<div class="login__field" [ngClass]="{ 'has-error': isSubmitted && formControls['username'].errors }">
+					<i class="login__icon fas fa-user"></i>
+					<input type="text" class="login__input" placeholder="User name" formControlName="username" required name="username" [(ngModel)]="credentials.username" />
+					<div *ngIf="isSubmitted && formControls['username'].errors" class="invalid-feedback">
+            <div *ngIf="formControls['username'].errors['required']">Username is required</div>
+        </div>
+				</div>
+				<div class="login__field" [ngClass]="{ 'has-error': isSubmitted && formControls['password'].errors }">
+					<i class="login__icon fas fa-lock"></i>
+					<input type="password" class="login__input" placeholder="Password" formControlName="password" required name="password" [(ngModel)]="credentials.password" />
+					<div *ngIf="isSubmitted && formControls['password'].errors" class="invalid-feedback">
+            <div *ngIf="formControls['password'].errors['required']">Password is required</div>
+        	</div>
+				</div>
+        <div class="login__remember">
+          <label class="login__remember__label" for="rememberme">Remember Me:</label>
+          <input type="checkbox" class="login__checkbox" formControlName="rememberme" name="rememberme" />
+        </div>
+				<button type="submit" class="button login__submit" [disabled]="loading">
+					<span class="button__text">Log In</span>
+					<img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          <i class="button__icon fas fa-chevron-right" aria-hidden="true"></i>
+				</button>
+			</form>
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>
+	</div>
+</div>

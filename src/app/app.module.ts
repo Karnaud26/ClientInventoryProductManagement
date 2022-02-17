@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule  } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS  } from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { DataTablesModule } from "angular-datatables";
+import { CookieService } from "ngx-cookie-service";
 
 import { ProductComponent } from './product/product.component';
 import { ProductListComponent } from "./product/product-list.component";
@@ -16,6 +17,10 @@ import { AppRoutingModule } from './app.routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NotificationService } from './toastr.service';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { AppService } from "./app.service";
+import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
 
 //declare const toastr: Toastr;
 
@@ -27,7 +32,9 @@ import { NotificationService } from './toastr.service';
     NavbarComponent,
     SidebarComponent,
     ContentComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,11 +47,12 @@ import { NotificationService } from './toastr.service';
   ],
   providers: [
     ProductService,
-    NotificationService
-    /*{
-      provide: TOASTR_TOKEN,
-      useValue: toastr
-    }*/
+    NotificationService,
+    AppService,
+    {
+      provide:HTTP_INTERCEPTORS, useClass:BasicAuthInterceptor, multi:true
+    },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
