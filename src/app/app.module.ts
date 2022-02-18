@@ -50,7 +50,7 @@ import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
     NotificationService,
     AppService,
     {
-      provide:HTTP_INTERCEPTORS, useClass:BasicAuthInterceptor, multi:true
+      provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true
     },
     CookieService
   ],
