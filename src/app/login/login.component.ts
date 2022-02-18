@@ -40,10 +40,14 @@ export class LoginComponent implements OnInit {
     });
 
     // reset login status
-    this.appService.logout();
+    this.appService.logout(()=>{
+      this.router.navigateByUrl('/login');
+    });
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    console.log(this.returnUrl);
+
   }
 
   signIn() {

@@ -4,12 +4,16 @@ import { API_URLS } from "./config/api.url.config";
 import { map } from 'rxjs/operators';
 import { CookieService } from "ngx-cookie-service";
 
+import { NotificationService } from './toastr.service';
+
 @Injectable()
 export class AppService {
 
   authenticated: boolean = false;
 
-  constructor(private httpClient: HttpClient, private cookieService: CookieService) { }
+  msgApplication: 'Product Management';
+
+  constructor(private httpClient: HttpClient, private cookieService: CookieService, private notifyService: NotificationService) { }
 
   authenticate(credentials, callback) {
     if(credentials){
@@ -40,7 +44,7 @@ export class AppService {
           }
           return callback && callback();
         },
-        errorMsg => { console.log(errorMsg);}
+        errorMsg => { console.log(errorMsg); this.notifyService.showError(errorMsg.error, this.msgApplication)}
       );
     }
     else{
@@ -55,11 +59,12 @@ export class AppService {
   }
 
   logout(callback?){
-    const _this = this
+    /*const _this = this
     this.httpClient.post('logout',{}).subscribe(() =>{
       _this.authenticated = false;
       return callback && callback();
-    });
+    });*/
     //sessionStorage.removeItem('currentUser')
+    return callback && callback();
   }
 }
